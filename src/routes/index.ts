@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import MovieRouter from './MovieRouter.js';
-import UserRouter from './UserRouter.js';
-import TicketRouter from './TicketRouter.js';
-import SessionRouter from './SessionRouter.js';
+import MovieRouter from './MovieRouter';
+import UserRouter from './UserRouter';
+import TicketRouter from './TicketRouter';
+import SessionRouter from './SessionRouter';
 
 const router = Router();
 

@@ -1,4 +1,4 @@
-import prisma from '../prismaClient.js';
+import prisma from '../prismaClient';
 
 class Controller {
   constructor({ entity, validationSchema, prismaOptions }) {

@@ -1,4 +1,4 @@
-import Controller from './Controller.js';
+import Controller from './Controller';
 import Joi from 'joi';
 import prisma from '@prisma/client';
 
