@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMINISTRATOR
+  REVIEWER
+}
+
+enum ParentalGuidance {
+  GENERAL_AUDIENCE // everyone
+  PARENTAL_GUIDANCE_SUGGESTED // < 13
+  PARENTAL_STRONGLY_CAUTIONED // >=17
+  RESTRICTED // > 18
+}
+
+enum Room {
+  D_BOX
+  D_LUX
+  IMAX
+  STANDARD
+}
+
+enum TicketType {
+  FREE
+  HALF_PRICE
+  PROMOTION
+  STANDARD
+}
+
+enum SeatStatus {
+  AVAILABLE
+  BLOCKED
+  BUSY
+  SELECTOR
+}
+
+enum SeatType {
+  STANDARD
+  OVERWEIGTH
+  REDUCE_MOBILITY
+  WHEELCHAIR
+}
+
+model SessionSeats {
+  id        String     @id @default(uuid())
+  line      String
+  column    Int
+  type      SeatType   @default(STANDARD)
+  status    SeatStatus @default(AVAILABLE)
+  Session   Session?   @relation(fields: [sessionId], references: [id])
+  sessionId String?
+}
+
+model Session {
+  id           String         @id @default(uuid())
+  sessionDate  DateTime
+  caption      Boolean        @default(false)
+  room         Room
+  movieId      String
+  movie        Movie          @relation(fields: [movieId], references: [id])
+  Ticket       Ticket[]
+  SessionSeats SessionSeats[]
+}
+
+model Movie {
+  id                String           @id @default(uuid())
+  name              String
+  description       String
+  duration          Int
+  director          String
+  parental_guidance ParentalGuidance @default(GENERAL_AUDIENCE)
+  thumbnail         String?
+  rating            Float
+  languages         String[]
+  Session           Session[]
+}
+
+model Ticket {
+  id            String     @id @default(uuid())
+  session       Session    @relation(fields: [sessionId], references: [id])
+  user          User       @relation(fields: [userId], references: [id])
+  price         Decimal    @db.Decimal(10, 2)
+  paymentStatus Boolean    @default(false)
+  type          TicketType @default(STANDARD)
+  pucharseDate  DateTime?
+  sessionId     String
+  userId        String
+}
+
+model User {
+  id        String   @id @default(uuid())
+  password  String
+  role      UserRole @default(USER)
+  name      String
+  country   String
+  email     String?
+  birthDate DateTime
+  phone     String? //optional
+  Ticket    Ticket[]
+}
