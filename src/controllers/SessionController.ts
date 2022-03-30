@@ -1,6 +1,7 @@
 import prisma from '@prisma/client';
 import Joi from 'joi';
 import Controller from './Controller';
+import { Request, Response } from 'express';
 
 const { Room, SeatType, SeatStatus } = prisma;
 
@@ -20,6 +21,10 @@ const schema = Joi.object({
 });
 
 class SessionController extends Controller {
+  private excludeColumns: Array<{ line: string, columns: number[] }>;
+  private maxOfColumns: number;
+  private maxOfRows: number
+
   constructor() {
     super({
       entity: 'session',
@@ -106,7 +111,7 @@ class SessionController extends Controller {
     return seats;
   }
 
-  store(request, response) {
+  async store(request: Request, response: Response) {
     // faz novo movieId
     const movieId = request.body.movieId;
 

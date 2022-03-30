@@ -25,7 +25,7 @@ class Controller {
     this.prismaEntity = (prisma as any)[entity]; // será passada a entidade na qual o controller vai agir
   }
 
-  async store(request: Request, response: Response) {
+  async store(request: Request, response: Response): Promise<any> {
     const { body } = request;
 
     // valida os dados de acordo com o que é passado no schema (se existir) de cada entidade (utilizando o Joi neste projeto)

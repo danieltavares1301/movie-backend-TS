@@ -21,4 +21,4 @@ module.exports = {
     indent: ['error', 4],
     'comma-spacing': ['error', { before: false, after: true }],
   },
-};
+}

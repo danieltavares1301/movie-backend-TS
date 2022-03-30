@@ -1,6 +1,7 @@
 import Controller from './Controller';
 import Joi from 'joi';
 import prisma from '@prisma/client';
+import { Request, Response } from 'express';
 
 const { TicketType } = prisma;
 
@@ -37,7 +38,7 @@ class TicketController extends Controller {
     });
   }
 
-  store(request, response) {
+  async store(request: Request, response: Response) {
     // pega novos sessionId e userId
     const { sessionId, userId } = request.body;
 
