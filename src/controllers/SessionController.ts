@@ -1,4 +1,4 @@
-import prisma from '@prisma/client';
+import * as prisma from '@prisma/client';
 import Joi from 'joi';
 import Controller from './Controller';
 import { Request, Response } from 'express';

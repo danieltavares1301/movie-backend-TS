@@ -1,6 +1,6 @@
 import Controller from './Controller';
 import Joi from 'joi';
-import prisma from '@prisma/client';
+import * as prisma from '@prisma/client';
 
 const { ParentalGuidance } = prisma;
 
